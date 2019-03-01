@@ -12,19 +12,18 @@ void reportCallback(advertisementReport_t *report) {
   
   for (int index = 0; index < 6; index++) {
     peerAddrStr.concat(String(report->peerAddr[index], HEX));
-  }    
+  }
   
   if (devices.indexOf(peerAddrStr) > 0) {
-      Particle.publish("skipDevice", peerAddrStr, PRIVATE);
+    // Skip adding a device
   } else {
-      devices.push_front(peerAddrStr);
-      Particle.publish("addDevice", peerAddrStr, PRIVATE);
+    devices.push_front(peerAddrStr);
+    deviceCount = devices.length();
   }
+  Particle.publish("deviceCount", String(deviceCount));
 }
 
-void setup() {
-  Particle.variable("deviceCount", deviceCount);
-  
+void setup() {  
   ble.init();
   ble.onScanReportCallback(reportCallback);
   ble.setScanParams(BLE_SCAN_TYPE, BLE_SCAN_INTERVAL, BLE_SCAN_WINDOW);
@@ -32,6 +31,4 @@ void setup() {
 }
 
 void loop() {
-  deviceCount = devices.length();
-//  delay(200);
 }
