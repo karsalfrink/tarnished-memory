@@ -19,8 +19,8 @@ void reportCallback(advertisementReport_t *report) {
   } else {
     devices.push_front(peerAddrStr);
     deviceCount = devices.length();
+    Particle.publish("deviceCount", String(deviceCount));
   }
-  Particle.publish("deviceCount", String(deviceCount));
 }
 
 void setup() {  
