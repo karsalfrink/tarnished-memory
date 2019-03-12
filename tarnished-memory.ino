@@ -20,16 +20,21 @@ void reportCallback(advertisementReport_t *report) {
     peerAddrStr.concat(String(report->peerAddr[index], HEX));
   }
   
+  String timestamp = String(Time.now());
+  
   if (deviceMap->has(peerAddrStr)) {
-    // Skip adding a device
+    // Existing device
+    deviceMap->put(peerAddrStr, timestamp); // Update the timestamp
   } else {
-    String timestamp = String(Time.now());
-    deviceMap->put(peerAddrStr, timestamp);
-
-    deviceCount = deviceMap->size();
-    
-    Particle.publish("deviceCount", String(deviceCount));
+    // New device
+    deviceMap->put(peerAddrStr, timestamp); // Add the device
+    updateDeviceCount();
+    Particle.publish("deviceCount", String(deviceCount), PRIVATE);
   }
+
+  cleanUpMap(window); // Remove any outdated devices
+}
+
 void cleanUpMap(int timeframe) {
     int now = Time.now();
     int expirationTime = now - timeframe;
@@ -46,6 +51,7 @@ void cleanUpMap(int timeframe) {
       }
     }
 }
+
 void updateDeviceCount() {
   deviceCount = deviceMap->size();
 }
