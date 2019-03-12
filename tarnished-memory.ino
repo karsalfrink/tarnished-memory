@@ -45,6 +45,8 @@ void cleanUpMap(int timeframe) {
       }
     }
 }
+void updateDeviceCount() {
+  deviceCount = deviceMap->size();
 }
 
 void setup() {  
