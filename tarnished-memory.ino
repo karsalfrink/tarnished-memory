@@ -5,6 +5,7 @@
 #define BLE_SCAN_WINDOW      0x0030 // 30 ms
 
 int deviceCount = 0;
+int window = 60; // Seconds
 
 SimpleMap<String, String> *deviceMap = new SimpleMap<String, String>([](String &a, String &b) -> int {
   if (a == b) return 0;      // a and b are equal
