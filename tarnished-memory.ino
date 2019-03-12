@@ -29,6 +29,22 @@ void reportCallback(advertisementReport_t *report) {
     
     Particle.publish("deviceCount", String(deviceCount));
   }
+void cleanUpMap(int timeframe) {
+    int now = Time.now();
+    int expirationTime = now - timeframe;
+
+    for (int i = 0; i < deviceMap->size(); i++) {
+      int timestamp = atoi(deviceMap->getData(i));
+
+      if (timestamp < expirationTime) {
+        // Remove device
+        deviceMap->remove(i);
+        updateDeviceCount();
+      } else {
+        // Keep device, i.e. do nothing
+      }
+    }
+}
 }
 
 void setup() {  
