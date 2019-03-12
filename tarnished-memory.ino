@@ -28,6 +28,8 @@ void setup() {
   ble.onScanReportCallback(reportCallback);
   ble.setScanParams(BLE_SCAN_TYPE, BLE_SCAN_INTERVAL, BLE_SCAN_WINDOW);
   ble.startScanning();
+
+  Serial.begin(9600);
 }
 
 void loop() {
