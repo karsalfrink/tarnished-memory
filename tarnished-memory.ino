@@ -56,6 +56,19 @@ void updateDeviceCount() {
   deviceCount = deviceMap->size();
 }
 
+void dispNum(unsigned int num) {
+  int8_t TimeDisp[] = {0x01,0x02,0x03,0x04};
+
+  if (num > 9999) num = 9999;
+
+  TimeDisp[0] = num / 1000;
+  TimeDisp[1] = num % 1000 / 100;
+  TimeDisp[2] = num % 100 / 10;
+  TimeDisp[3] = num % 10;
+
+  tm1637.display(TimeDisp);
+}
+
 void setup() {  
   ble.init();
   ble.onScanReportCallback(reportCallback);
