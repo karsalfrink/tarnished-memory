@@ -84,7 +84,6 @@ void setup() {
 
   tm1637.init();
   tm1637.set(BRIGHT_TYPICAL); // BRIGHT_TYPICAL = 2, BRIGHT_DARKEST = 0, BRIGHTEST = 7
-  dispNum(random(9999));
   
   Serial.begin(9600);
 }
