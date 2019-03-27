@@ -1,8 +1,14 @@
 #include <SimpleMap.h>
+#include <TM1637.h>
 
 #define BLE_SCAN_TYPE        0x00   // Passive scanning
 #define BLE_SCAN_INTERVAL    0x0060 // 60 ms
 #define BLE_SCAN_WINDOW      0x0030 // 30 ms
+
+#define CLK 4
+#define DIO 5
+
+TM1637 tm1637(CLK,DIO);
 
 int deviceCount = 0;
 int window = 60; // Seconds
@@ -75,6 +81,10 @@ void setup() {
   ble.setScanParams(BLE_SCAN_TYPE, BLE_SCAN_INTERVAL, BLE_SCAN_WINDOW);
   ble.startScanning();
 
+  tm1637.init();
+  tm1637.set(BRIGHT_TYPICAL); // BRIGHT_TYPICAL = 2, BRIGHT_DARKEST = 0, BRIGHTEST = 7
+  dispNum(random(9999));
+  
   Serial.begin(9600);
 }
 
