@@ -36,6 +36,7 @@ void reportCallback(advertisementReport_t *report) {
     deviceMap->put(peerAddrStr, timestamp); // Add the device
     updateDeviceCount();
     Particle.publish("deviceCount", String(deviceCount), PRIVATE);
+    dispNum(deviceCount);
   }
 
   cleanUpMap(window); // Remove any outdated devices
